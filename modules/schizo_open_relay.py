@@ -9,10 +9,10 @@ import sys
 import errno
 import time
 import threading
-
+from time import gmtime, strftime
 import asyncore
 import asynchat
-
+import re
 import json
 
 sys.path.append("../")
@@ -24,9 +24,17 @@ hpc,hpfeeds_prefix = mailoney.connect_hpfeeds()
 def log_to_file(file_path, ip, port, data):
     with output_lock:
         with open(file_path, "a") as f:
+            res = []
+            res = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', data)
+
+            dictmap = dict({'timeline' : strftime("%m:%d:%y %H:%M:%S", gmtime()), 'ipaddr' :ip, 'port' : port,  'data' :data , 'emails' : res })
+            res = json.dumps(dictmap)
+            f.write(res + '\n')
+            #file_path.write(str(res))
             message = "[{0}][{1}:{2}] {3}".format(time.time(), ip, port, data.encode("string-escape"))
+            res = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', data)
             print file_path + " " + message
-            f.write(message + "\n")
+        #    f.write(message + "\n")
 
 def log_to_hpfeeds(channel, data):
         if hpc:
@@ -49,7 +57,7 @@ def process_packet_for_shellcode(packet, ip, port):
 
 
 
-__version__ = 'ESMTP Exim 4.69 #1 Thu, 29 Jul 2010 05:13:48 -0700'
+__version__ = 'ESMTP Exim 4.81 #1 Thu, 29 Jul 2010 05:13:48 -0700'
 EMPTYSTRING = ''
 NEWLINE = '\n'
 

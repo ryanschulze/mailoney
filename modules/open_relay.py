@@ -23,14 +23,12 @@ def or_module():
                 logfile = open('logs/mail.log', 'a')
             else:
                 logfile = open('logs/mail.log', 'w')
-            logfile.write('\n\n' + '*' * 50 + '\n')
-            logfile.write('IP Address: {}\n'.format(peer[0]))
-            logfile.write('Mail to: {}\n'.format(mailfrom))
-            #Need to loop through rcpts if more than one is given
-            logfile.write('Mail from: {}\n'.format(rcpttos[0]))
-            logfile.write('Data:\n')
-            logfile.write('\n')
-            logfile.write(data)
+
+            dictmap = dict({'ipaddr' : peer[0], 'mail to' : mailfrom, 'mail from' : rcpttos[0], 'data' :data })
+            tmpstr= mailfrom+' ' + rcpttos[0] + ' ' + data
+            res = re.findall("\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b", tmpstr)
+            print res
+            json.dump(dictmap, logfile)
             logfile.close
 
     def run():

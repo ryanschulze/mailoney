@@ -1,0 +1,2 @@
+{"timeline": "12:20:19 12:09:29", "ipaddr": "127.0.0.1", "port": 51560, "data": "EHLO ASDAS@mail.com", "emails": ["ASDAS@mail.com"]}
+{"timeline": "12:20:19 12:09:48", "ipaddr": "127.0.0.1", "port": 51560, "data": "MAIL FROM: ASDasdqw@mail.com asd@aol.com", "emails": ["ASDasdqw@mail.com", "asd@aol.com"]}
