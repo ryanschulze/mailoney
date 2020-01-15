@@ -27,14 +27,12 @@ def log_to_file(file_path, ip, port, data):
             res = []
             res = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', data)
 
-            dictmap = dict({'UtcTime' : strftime("20%y-%m-%d %H:%M:%S.000", gmtime()), 'SourceIp' :ip, 'SourcePort' : port,  'data' :data , 'emails' : res })
+            dictmap = dict({'timestamp' : strftime("20%y-%m-%dT%H:%M:%S.000000Z", gmtime()), 'src_ip' :ip, 'src_port' : port,  'data' :data , 'emails' : res })
             res = json.dumps(dictmap)
             f.write(res + '\n')
-            #file_path.write(str(res))
             message = "[{0}][{1}:{2}] {3}".format(time.time(), ip, port, data.encode("string-escape"))
             res = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', data)
             print file_path + " " + message
-        #    f.write(message + "\n")
 
 def log_to_hpfeeds(channel, data):
         if hpc:
