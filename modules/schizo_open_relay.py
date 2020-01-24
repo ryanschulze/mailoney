@@ -29,7 +29,7 @@ def log_to_file(file_path, ip, port, data):
                 res = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', data)
                 if len(data) > 4096:
                     data = "BIGSIZE"
-                dictmap = dict({'timestamp' : strftime("20%y-%m-%dT%H:%M:%S.000000Z", gmtime()), 'src_ip' :ip, 'src_port' : port,  'data' :data , 'emails' : res })
+                dictmap = dict({'timestamp' : strftime("20%y-%m-%dT%H:%M:%S.000000Z", gmtime()), 'src_ip' :ip, 'src_port' : port,  'data' :data , 'emails' : res, 'protocol' : 'smtp' })
                 res = json.dumps(dictmap)
                 f.write(res + '\n')
                 message = "[{0}][{1}:{2}] {3}".format(time.time(), ip, port, data.encode("string-escape"))
